@@ -1,4 +1,6 @@
 using APIIdentityJWT.Contextes;
+using APIIdentityJWT.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AuthDemoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 5;
+}).AddEntityFrameworkStores<AuthDemoDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
 
