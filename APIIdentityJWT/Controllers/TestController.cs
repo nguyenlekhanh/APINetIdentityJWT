@@ -9,6 +9,7 @@ namespace APIIdentityJWT.Controllers
     [Authorize]
     public class TestController : ControllerBase
     {
+        [HttpGet]
         public string Get()
         {
             return "Hello!";

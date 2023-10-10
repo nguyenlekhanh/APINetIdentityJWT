@@ -38,7 +38,8 @@ namespace APIIdentityJWT.Controllers
 
             if(await _authService.Login(user))
             {
-                return Ok("Done");
+                var tokenString = _authService.GenerateTokenString(user);
+                return Ok(tokenString);
             }
             return BadRequest();
         }
